@@ -220,7 +220,7 @@ export default function Home() {
                 Leopold Ormos
               </h1>
               <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-300">
-                Software Engineer at Bosch
+                Software Architect at Bosch
               </h2>
               {/* <p className="mt-4 max-w-xs leading-normal">
                 I build robust software systems and data pipelines at the intersection of software engineering and ML.
@@ -305,13 +305,43 @@ export default function Home() {
               <SectionHeading>Experience</SectionHeading>
               <div className="group/list space-y-12">
                 <ExperienceCard
-                  date="2024 — Present"
-                  title="Software Engineer"
+                  date="Mar 2026 — Present"
+                  title="Software Architect"
                   company="Robert Bosch GmbH"
                   companyUrl="https://www.bosch.com"
-                  // description="Building software systems and data pipelines at one of the world's leading engineering and technology companies. Applying modern MLOps practices to develop and maintain production-grade ML systems."
                   description=""
-                  // skills={["Software Engineering", "MLOps", "Data Pipelines", "Python"]}
+                  skills={[]}
+                />
+                <ExperienceCard
+                  date="Sept 2024 — Feb 2026"
+                  title="MLOps Engineer"
+                  company="Robert Bosch GmbH"
+                  companyUrl="https://www.bosch.com"
+                  description=""
+                  skills={[]}
+                />
+                <ExperienceCard
+                  date="Apr 2022 — Sept 2024"
+                  title="Software Engineer (Cloud & DevOps)"
+                  company="Robert Bosch GmbH"
+                  companyUrl="https://www.bosch.com"
+                  description=""
+                  skills={[]}
+                />
+                <ExperienceCard
+                  date="Oct 2019 — Mar 2022"
+                  title="Software Engineer (Fullstack)"
+                  company="Robert Bosch GmbH"
+                  companyUrl="https://www.bosch.com"
+                  description=""
+                  skills={[]}
+                />
+                <ExperienceCard
+                  date="Oct 2016 — Sept 2019"
+                  title="Dual Student — Applied Computer Science"
+                  company="Robert Bosch GmbH"
+                  companyUrl="https://www.bosch.com"
+                  description=""
                   skills={[]}
                 />
               </div>
@@ -322,13 +352,19 @@ export default function Home() {
               <SectionHeading>Education</SectionHeading>
               <div className="group/list space-y-12">
                 <EducationCard
-                  date="2022 — 2024"
+                  date="Apr 2022 — Sept 2024"
                   degree="M.Sc. Computer Science"
                   school="University of Stuttgart"
                   schoolUrl="https://www.uni-stuttgart.de"
                   thesis="Evaluation of MLOps Approaches and Implementation of a Data Product Development Pipeline"
                   thesisUrl="https://github.com/gitpold/master-thesis-mlops"
-                  // description="Focused on the intersection of software engineering and machine learning. Research explored how MLOps methodologies and tooling can be applied to build reliable, maintainable data product pipelines."
+                  description=""
+                />
+                <EducationCard
+                  date="Oct 2016 — Sept 2019"
+                  degree="B.Sc. Applied Computer Science"
+                  school="DHBW Baden-Württemberg"
+                  schoolUrl="https://www.dhbw.de"
                   description=""
                 />
               </div>
