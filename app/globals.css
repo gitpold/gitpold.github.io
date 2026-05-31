@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter);
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #1a6a82 #0c3d52;
+}
+
+body {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
