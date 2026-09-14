@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# gitpold.github.io
 
-## Getting Started
+Personal website and portfolio for Leopold Ormos — [leopold.ormos.me](https://leopold.ormos.me).
 
-First, run the development server:
+A single-page static site: Next.js App Router, exported to plain HTML and served
+from GitHub Pages.
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI | React 19 |
+| Language | TypeScript 5 (strict) |
+| Styling | Tailwind CSS v4 (PostCSS, no `tailwind.config.js`) |
+| Font | Inter, via `next/font/google` |
+| Hosting | GitHub Pages |
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # static export to ./out
+npm run lint     # ESLint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+There is no `npm start` — `next.config.ts` sets `output: "export"`, so the build
+produces static files rather than a server to run.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+  layout.tsx    # root layout: Inter font, page metadata
+  page.tsx      # the whole page — sidebar, sections, and the shared Card component
+  globals.css   # Tailwind entry point and @theme tokens
+  icon.svg      # favicon
+public/
+  profile.jpg   # profile photo
+  CNAME         # custom domain for GitHub Pages
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Pushing to `main` triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml),
+which builds the site and publishes `out/` to GitHub Pages. The custom domain is
+configured by `public/CNAME`, which the export copies to the site root.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Agent instructions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[`AGENTS.md`](AGENTS.md) documents the project conventions for coding agents;
+[`CLAUDE.md`](CLAUDE.md) adds Claude Code-specific notes on top of it.

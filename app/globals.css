@@ -7,10 +7,22 @@
 }
 
 html {
+  /* Matches the page palette so UA-rendered chrome (scrollbars, overscroll) is dark. */
+  color-scheme: dark;
   scrollbar-width: thin;
   scrollbar-color: #1a6a82 #0c3d52;
 }
 
 body {
+  /* The page background also lives on <body> so overscroll doesn't flash white. */
+  background-color: #0c3d52;
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* <html> carries Tailwind's scroll-smooth; opt out for reduced-motion users,
+   matching the motion-reduce: variants used on the component transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

@@ -9,7 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Leopold Ormos",
-  description: "Software Engineer at Bosch, based in Stuttgart. Building robust software systems and data pipelines at the intersection of software engineering and ML.",
+  description: "Software Architect at Bosch, based in Stuttgart. Building robust software systems and data pipelines at the intersection of software engineering and ML.",
 };
 
 export default function RootLayout({

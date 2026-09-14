@@ -8,7 +8,7 @@ may all differ from your training data. Read the relevant guide in
 
 # gitpold.github.io — Leopold Ormos — Personal Website
 
-Portfolio and personal website for **Leopold Ormos**, Software Engineer at
+Portfolio and personal website for **Leopold Ormos**, Software Architect at
 Robert Bosch GmbH in Stuttgart. Static site deployed to GitHub Pages.
 
 ## Tech Stack
@@ -35,8 +35,10 @@ Robert Bosch GmbH in Stuttgart. Static site deployed to GitHub Pages.
 ```bash
 npm run dev      # Dev server on http://localhost:3000 (Turbopack)
 npm run build    # Build + export to ./out/ (static HTML)
-npm run lint     # ESLint
+npm run lint     # ESLint — keep this warning-free
 ```
+
+There is deliberately **no** `npm start`: `next start` cannot serve a static export.
 
 ## Repository Layout
 
@@ -44,14 +46,18 @@ npm run lint     # ESLint
 app/
   layout.tsx     # Root layout — Inter font, metadata for Leopold Ormos
   page.tsx       # Single-page portfolio (About / Experience / Education /
-                 #   Skills / Projects / Contact). All sections in one file.
+                 #   Projects / Contact). All sections and components in one file.
   globals.css    # Tailwind v4 entry: @import "tailwindcss", custom @theme tokens
-components/      # Reusable React components (currently empty — co-located in app/)
+  icon.svg       # Favicon (LO initials)
 public/
   profile.jpg    # Profile photo (referenced in app/page.tsx)
+  CNAME          # Custom domain (leopold.ormos.me) — copied to out/ by the export
 .github/workflows/deploy.yml  # CI: push to main → build → GitHub Pages
 next.config.ts   # output: "export", images: { unoptimized: true }
 ```
+
+There is no `components/` directory — everything is co-located in `app/page.tsx`.
+Create one only once a second route exists to share with.
 
 ## Design Tokens & Theme
 
@@ -59,7 +65,7 @@ The site uses a **dark teal** palette. Key values:
 
 | Token | Value | Where |
 |---|---|---|
-| Page background | `#0c3d52` | `bg-[#0c3d52]` on root `div` |
+| Page background | `#0c3d52` | `body` in `globals.css` + `bg-[#0c3d52]` on root `div` |
 | Overlay glow | `rgba(191,219,254,0.06)` | radial gradient in `page.tsx` |
 | Scrollbar track | `#0c3d52` | `globals.css` |
 | Scrollbar thumb | `#1a6a82` | `globals.css` |
@@ -69,18 +75,33 @@ The site uses a **dark teal** palette. Key values:
 
 When modifying styles, keep this palette consistent.
 
+**Contrast:** on `#0c3d52`, `text-slate-400` is ~4.4:1 and `text-slate-500` only
+~2.4:1. Use `slate-400` or lighter for text; never `slate-500` (it is fine for
+non-text decoration such as the inactive nav rule).
+
 ## Page Architecture (`app/page.tsx`)
 
 The home page is a **`"use client"`** component because it uses `useEffect` /
 `useState` for active-section tracking (IntersectionObserver). This is intentional.
 
 Key structures:
-- `NAV_ITEMS` — array of `{id, label}` used by both the sidebar nav and `<section id>` anchors
-- `SKILLS` — object mapping category → string[] rendered as tag pills
-- `ExperienceCard`, `EducationCard`, `ProjectCard` — reusable card components
-- `SectionHeading` — sticky heading on mobile, visually hidden (`lg:sr-only`) on desktop
+- `NAV_ITEMS` — array of `{id, label}` used by both the sidebar nav and `<section id>`
+  anchors. **Every entry must have a matching section**, or the nav link is a dead
+  anchor that never highlights.
+- `Card` — the one card used by Experience, Education and Projects. Omit `date` and the
+  body spans the full grid; `description`, `skills` and `children` are all optional and
+  render nothing when empty.
+- `Thesis` — optional `children` block for education cards.
+- `SectionHeading` — sticky heading on mobile, visually hidden (`lg:sr-only`) on desktop.
+  Don't add positioning utilities alongside `lg:sr-only`; `lg:relative` and friends
+  override its `position: absolute` and break it.
+- `GitHubIcon` / `LinkedInIcon` / `MailIcon` — take an optional `className`, defaulting
+  to `h-6 w-6`. Keep every icon in a given row the same size.
 
 To add a section: add to `NAV_ITEMS`, add `<section id="…">` in `<main>`, add content inline or in a data file.
+
+The Skills section and most of the body copy are currently commented out in
+`page.tsx`. That is drafted content waiting to be enabled, not dead code — leave it.
 
 ## Tailwind CSS v4
 
