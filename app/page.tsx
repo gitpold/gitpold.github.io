@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { FlowBackground } from "./FlowBackground";
 
 // NOTE: keep in sync with the <section id="…"> elements in <main>.
 // The "Skills" entry is intentionally absent while that section is commented out.
@@ -144,11 +145,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="bg-[#0c3d52] text-slate-400 leading-relaxed antialiased selection:bg-blue-200 selection:text-slate-900">
+    // `isolate` makes this a stacking context, so FlowBackground's -z-10 layer
+    // paints above this div's own background instead of behind it.
+    <div className="isolate bg-[#0c3d52] text-slate-400 leading-relaxed antialiased selection:bg-blue-200 selection:text-slate-900">
       <a href="#content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-50 focus:rounded-lg focus:bg-slate-800 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-slate-200 focus:ring-1 focus:ring-slate-700/50">
         Skip to content
       </a>
+
+      <FlowBackground />
 
       {/* Subtle top radial glow */}
       <div

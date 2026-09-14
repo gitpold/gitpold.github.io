@@ -47,6 +47,7 @@ app/
   layout.tsx     # Root layout — Inter font, metadata for Leopold Ormos
   page.tsx       # Single-page portfolio (About / Experience / Education /
                  #   Projects / Contact). All sections and components in one file.
+  FlowBackground.tsx  # Ambient animated background (SVG + CSS, no scripting)
   globals.css    # Tailwind v4 entry: @import "tailwindcss", custom @theme tokens
   icon.svg       # Favicon (LO initials)
 public/
@@ -56,8 +57,9 @@ public/
 next.config.ts   # output: "export", images: { unoptimized: true }
 ```
 
-There is no `components/` directory — everything is co-located in `app/page.tsx`.
-Create one only once a second route exists to share with.
+There is no `components/` directory — page content is co-located in
+`app/page.tsx`, with `FlowBackground.tsx` split out only because of its size.
+Create a `components/` directory only once a second route exists to share with.
 
 ## Design Tokens & Theme
 
@@ -102,6 +104,30 @@ To add a section: add to `NAV_ITEMS`, add `<section id="…">` in `<main>`, add 
 
 The Skills section and most of the body copy are currently commented out in
 `page.tsx`. That is drafted content waiting to be enabled, not dead code — leave it.
+
+## Ambient background (`app/FlowBackground.tsx`)
+
+Braided threads of light drifting behind the content. Static SVG plus CSS
+keyframes — no hooks, no per-frame scripting, and fully disabled under
+`prefers-reduced-motion`.
+
+Things that will break it if changed carelessly:
+
+- **`isolate` on the page root in `page.tsx`.** Without that stacking context,
+  the background's `-z-10` layer paints *behind* the root div's background and
+  vanishes.
+- **The seeded PRNG.** The layout is generated at module scope from `SEED`.
+  Never use `Math.random()` here: the page is statically prerendered, so the
+  build and the client would generate different layouts and hydration would
+  mismatch. Reroll the composition by changing `SEED`, not by unseeding it.
+- **`preserveAspectRatio="none"`.** Needed for full coverage; `slice` crops
+  roughly 30% of the height on a 16:9 screen and leaves bare bands.
+- **Braid placement is stratified** across horizontal bands and anchored to each
+  braid's centre. Uniformly random placement leaves visible bare stripes.
+
+Density and intensity knobs: `BRAID_COUNT` (12), `strandCount` (2–4), and the
+group `opacity` (0.14). It currently renders 36 strands as 72 animated paths —
+worth re-checking mobile performance if that count goes up.
 
 ## Tailwind CSS v4
 
